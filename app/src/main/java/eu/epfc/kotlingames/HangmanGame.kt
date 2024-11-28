@@ -12,8 +12,7 @@ fun main() {
     println("Game Starts")
 
     val wordToGuess = generateWordToGuess()
-    val success : String = "YOU WIN!"
-    val fail : String = "GAME OVER! The word was $wordToGuess"
+    var win = false
 
     val lettersPlayedByUsers : MutableList<Char> = mutableListOf()
 
@@ -21,10 +20,6 @@ fun main() {
     println("$maskedWord \n")
 
     for (turn in 0..7) {
-        if (!maskedWord.contains('*')) {
-            break
-        }
-
         print("Type a letter: ")
         val stringInput = readLine()
 
@@ -32,13 +27,19 @@ fun main() {
             lettersPlayedByUsers += stringInput[0]
             maskedWord = getMaskedWordToGuess(wordToGuess, lettersPlayedByUsers)
             println("$maskedWord")
+
+            if (!maskedWord.contains('*')) {
+                win = true
+                break
+            }
         }
     }
 
-    if(maskedWord.contains('*'))
-        println(fail)
-    else
-        println(success)
+    if (win){
+        println("YOU WIN!")
+    } else {
+        println("GAME OVER. The word was \"$wordToGuess\"")
+    }
 }
 
 fun generateWordToGuess() : String {
@@ -48,10 +49,7 @@ fun generateWordToGuess() : String {
     return dictionary[randomIndex].lowercase()
 }
 
-fun getMaskedWordToGuess(
-    wordToGuess: String,
-    playedLetters: List<Char>
-) : String {
+fun getMaskedWordToGuess(wordToGuess: String, playedLetters: List<Char>) : String {
     var maskedWord = ""
 
     for(letter in wordToGuess) {
