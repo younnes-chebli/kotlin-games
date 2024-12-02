@@ -1,4 +1,4 @@
-package eu.epfc.kotlingames
+package eu.epfc.kotlingames.hangman
 
 import java.io.File
 import java.lang.Thread.sleep
