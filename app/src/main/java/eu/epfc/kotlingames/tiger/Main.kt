@@ -54,17 +54,26 @@ private fun test4() {
 }
 
 private fun askForNewGame() {
-    print("Do you want to continue? (yes/no): ")
-    val input = readlnOrNull()
-    input?.lowercase()
+    do {
+        print("Do you want to continue? (yes/no): ")
+        val input = readlnOrNull()
+        input?.lowercase()
 
-    if (input == "yes") {
-        jungleGame()
-    } else if (input == "no") {
-        println("You won $victories time(s) and you failed $failures time(s)")
-        victories = 0
-        failures = 0
-    }
+        when (input) {
+            "yes" -> {
+                jungleGame()
+            }
+            "no" -> {
+                println("You won $victories time(s) and you failed $failures time(s)")
+                victories = 0
+                failures = 0
+            }
+            else -> {
+                println()
+                println("Not a valid answer, type Yes or No.")
+            }
+        }
+    } while (input != "yes" && input != "no")
 }
 
 private fun jungleGame() {
@@ -75,19 +84,23 @@ private fun jungleGame() {
         println()
         println("Next enemy: ${enemy.name}")
 
-        while (enemy.lifePoints > 0 && player.lifePoints > 0) {
-            print("Press letter a to attack current enemy: ")
+         do {
+            print("Press letter 'a' to attack current enemy: ")
             val input = readlnOrNull()
+            input?.lowercase()
 
-            if(input is String) {
+            if( input == "a") {
                 player.attack(enemy){
                     println("You failed to attack. Damage: $it")
                 }
                 println("Enemy life points: ${enemy.lifePoints}")
                 println("Your life points: ${player.lifePoints}")
                 println()
+            } else {
+                println("Not a valid answer, type letter 'a' to attack.")
+                println()
             }
-        }
+        } while ((enemy.lifePoints > 0 && player.lifePoints > 0) || input != "a")
 
         if (player.lifePoints <= 0) {
             println("GAME OVER")
