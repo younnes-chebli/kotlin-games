@@ -104,8 +104,8 @@ private fun jungleGame() {
 
         if (player.lifePoints <= 0) {
             println("GAME OVER")
-            askForNewGame()
             ++failures
+            askForNewGame()
             break
         }
     }
